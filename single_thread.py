@@ -1,5 +1,3 @@
-import os
-import sys
 import socket
 import threading
 import select
@@ -9,8 +7,8 @@ class socket_Thread(threading.Thread):
         threading.Thread.__init__(self)
         self.daemon = True
         self.stopRequest = threading.Event()
-        self.socket_ip = ""# ip 주소
-        self.socket_port = int(5555) # port 주소
+        self.socket_ip = "127.0.0.1"# ip 주소
+        self.socket_port = int(12346) # port 주소
         self.web_lsn = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.web_lsn.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         self.web_lsn.bind((self.socket_ip, self.socket_port))
@@ -28,8 +26,9 @@ def recv_msg(lsn):
                     web_socket, addr = sock.accept()
                     if sock == lsn :
                         try:
+                            thread_id = threading.current_thread().ident
                             recv_data = web_socket.recv(1024)
-                             
+                            print(f"Thread ID {thread_id}: 수신 응답: {recv_data.decode()}")
                         except Exception as e:
                             web_socket.close()                            
         except Exception as error:
