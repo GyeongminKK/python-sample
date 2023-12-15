@@ -6,7 +6,8 @@ def makefile():
     name = random.randint(1000,9999)
     score = random.randint(0,100)
     input_date = datetime(2023,12,1) + timedelta(days=random.randint(0,30))
-    return f"{group_name},{name},{score},{input_date}\n"
+    formatted_date = input_date.strftime('%Y-%m-%d')
+    return f"{group_name},{name},{score},{formatted_date}\n"
 
 
 if __name__ == "__main__" :
